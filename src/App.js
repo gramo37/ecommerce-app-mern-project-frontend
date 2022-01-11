@@ -1,24 +1,43 @@
-import logo from './logo.svg';
 import './App.css';
+import Footer from './components/Footer/Footer';
+import Navbar from './components/Navbar/Navbar';
+import About from './components/About/About'
+import ProductContainer from './components/Product/ProductContainer';
+import Contact from './components/Contact/Contact'
+import Home from './components/Home/Home'
+import WebFont from 'webfontloader';
+
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route
+} from "react-router-dom";
+import React, { useState } from 'react';
+import ProductDetailsContainer from './components/Product/ProductDetailsContainer';
 
 function App() {
+  React.useEffect(() => {
+    WebFont.load({
+      google: {
+        families: ["Roboto", "Droid Sans", "Chilanka"]
+      }
+    })
+  })
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route exact path="/" element={<Home />} />
+        <Route exact path="about" element={<About />} />
+        <Route exact path="products" element={<ProductContainer />} />
+        <Route exact path="product/:id/" element={<ProductDetailsContainer />} />
+        <Route path="products/:keyword" element={<ProductContainer />} />
+        <Route exact path="contact" element={<Contact />} />
+
+      </Routes>
+      <Footer />
+    </Router>
   );
 }
 
