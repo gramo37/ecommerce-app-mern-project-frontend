@@ -14,7 +14,7 @@ const Product = (props) => {
         color: "yellow",
         activeColor: "orange",
         size: window.innerWidth < 600 ? 20 : 25,
-        value: Number(product.ratings),
+        value: Number(product.ratings)/2,
         isHalf: true
     }
 

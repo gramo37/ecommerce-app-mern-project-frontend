@@ -1,49 +1,42 @@
 import React, { useState, useEffect } from 'react'
-import Slider from '@mui/material/Slider';
-import Typography from '@mui/material/Typography'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Search from '../Search/Search';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import { getCategoryList, getPriceFilter, getCategoryFilter } from '../../actions/productAction'
+import { getCategoryList } from '../../actions/productAction'
 import { useDispatch, useSelector } from "react-redux"
-import Select from '@mui/material/Select';
+import { logoutUser, clearUserError } from '../../actions/userAction';
+import {loadUser} from "../../actions/userAction"
+import UserInfo from './UserInfo';
 
-const Navbar = (props) => {
+const Navbar = () => {
+
+    // Variables
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const [isAuthenticatedUser, setisAuthenticatedUser] = useState(false)
 
     // useSelectors
     const key = useSelector(
         (state) => state.category
     )
-    const priceFil = useSelector(
-        (state) => state.price
-    )
-    const categoryFilter = useSelector(
-        (state) => state.categoryFilter
+    const userDetails = useSelector(
+        (state) => state.user
     )
 
-    // Variables
-    const dispatch = useDispatch();
-    
     // useEffect
-    useEffect(async () => {
+    useEffect(() => {
         if (key.error) {
             return alert.error(key.error);
         }
-        await dispatch(getCategoryList())
-    }, [dispatch, key.error])
+        // dispatch(loadUser())
+        
+        setisAuthenticatedUser(userDetails.isAuthenticated)
+    }, [dispatch, userDetails, key.error])
 
     // Functions
-    const priceHandler = (event, newPrice) => {
-        dispatch(getPriceFilter(newPrice))
-    }
-
-    const categoryHandler = (event) => {
-        dispatch(getCategoryFilter(event.target.value))
-    };
-
-    const capitalize = (word) => {
-        return word.charAt(0).toUpperCase() + word.slice(1);
+    const logout = async () => {
+        await dispatch(logoutUser())
+        await dispatch(clearUserError())
+        navigate('/login')
     }
 
     return (
@@ -68,34 +61,12 @@ const Navbar = (props) => {
                             <li className="nav-item">
                                 <Link className="nav-link active" aria-current="page" to="/contact">Contact</Link>
                             </li>
+                            <li className="nav-item">
+                                {isAuthenticatedUser ? <Link className="nav-link active" aria-current="page" to="/login" onClick={() => logout()}>Logout</Link> : <Link className="nav-link active" aria-current="page" to="/login">Login</Link>}
+                            </li>
                         </ul>
                         <Search />
-                        <div className="filterBox">
-                            <Typography>Price</Typography>
-                            <Slider
-                                value={priceFil.price}
-                                onChange={priceHandler}
-                                valueLabelDisplay='auto'
-                                aria-labelledby="range-slider"
-                                min={0}
-                                max={25000}
-                            />
-                        </div>
-                        <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-                            <Typography>Categories</Typography>
-                            <Select
-                                labelId="demo-simple-select-standard-label"
-                                id="demo-simple-select-standard"
-                                value={categoryFilter.categoryFil}
-                                onChange={categoryHandler}
-                                label="Category"
-                            >
-                                <MenuItem key={"all"} value={""}>All Products</MenuItem>
-                                {key.category.category && key.category.category.map((item) => (
-                                    <MenuItem key={item.id} value={item.category !== undefined ? item.category : "Food"}>{capitalize(item.category !== undefined ? item.category : "food")}</MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
+                        {/* {userDetails.isAuthenticated && <UserInfo user={userDetails}/>} */}
                     </div>
                 </div>
             </nav>

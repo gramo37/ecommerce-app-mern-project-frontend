@@ -9,6 +9,7 @@ import './Product.css'
 import ProductReviews from './ProductReviews';
 import {useAlert} from "react-alert";
 import Loader from '../Loader/Loader';
+import Navbar from '../Navbar/Navbar';
 
 const ProductDetailsContainer = () => {
 
@@ -42,6 +43,8 @@ const ProductDetailsContainer = () => {
 
     return (
         <>
+            <Navbar showFilter={false} />
+            
             {loading ? <Loader /> : <div>
                 <div className='productDetails'>
                     <div className="left-details">

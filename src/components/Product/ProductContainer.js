@@ -3,10 +3,14 @@ import Product from './Product'
 import './Product.css'
 import { getProduct } from '../../actions/productAction'
 import { useDispatch, useSelector } from "react-redux"
-// import { useParams } from "react-router-dom"
 import { useAlert } from "react-alert";
 import Loader from '../Loader/Loader'
 import { useLocation } from 'react-router-dom';
+import Navbar from '../Navbar/Navbar'
+import Filters from '../Filters/Filters'
+import { loadUser } from '../../actions/userAction';
+import { clearUserError } from '../../actions/userAction'
+
 const ProductContainer = () => {
 
     // UseSelectors
@@ -16,8 +20,11 @@ const ProductContainer = () => {
     const { category } = useSelector(
         (state) => state.categoryFilter
     )
-    const { loading, error, products, productsCount } = useSelector(              // useSelector is for getting the state from reducer
+    const { loading, error, products, productsCount, filteredProductCount } = useSelector(              // useSelector is for getting the state from reducer
         (state) => state.products
+    )
+    const { ratings } = useSelector(
+        (state) => state.ratings
     )
 
     // Variables
@@ -29,21 +36,31 @@ const ProductContainer = () => {
     const productPerPage = 6
     const pageLimit = Math.ceil(productsCount / productPerPage)
 
+    const userDetails = useSelector(
+        (state) => state.user
+    )
+
+    console.log(document.cookie)
     // UseEffect
     useEffect(() => {
         if (error) {
             return alert.error(error);
         }
         updateProduct()
-    }, [dispatch, error, alert, keyword, currentPage, price, category])
+    }, [dispatch, error, alert, keyword, currentPage, price, category, ratings])
+
+    useEffect(() => {
+        dispatch(clearUserError())
+        updateProduct()
+    }, [])
 
     // Functions
     const updateProduct = async () => {
         if (keyword) {
-            await dispatch(getProduct(keyword, currentPage, productPerPage, price, category))      // dispatch is used to call actions
+            await dispatch(getProduct(keyword, currentPage, productPerPage, price, category, ratings))      // dispatch is used to call actions
         }
         if (!keyword) {
-            await dispatch(getProduct("", currentPage, productPerPage, price, category))
+            await dispatch(getProduct("", currentPage, productPerPage, price, category, ratings))
         }
     }
 
@@ -61,6 +78,8 @@ const ProductContainer = () => {
 
     return (
         <>
+            <Navbar showFilter={true} />
+            <Filters />
             <h1 className='text-center m-4'>PRODUCTS</h1>
 
             {loading ? <Loader /> : <div className='container-fluid productContainer mt-2'>
@@ -78,4 +97,4 @@ const ProductContainer = () => {
     )
 }
 
-export default ProductContainer
+export default ProductContainer;

@@ -1,0 +1,17 @@
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_FAIL = "LOGIN_FAIL";
+export const REQUIRE_LOGIN = "REQUIRE_LOGIN";
+
+export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
+export const LOGOUT_FAIL = "LOGOUT_FAIL";
+export const REQUIRE_LOGOUT = "REQUIRE_LOGOUT";
+
+export const SIGNIN_SUCCESS = "SIGNIN_SUCCESS";
+export const SIGNIN_FAIL = "SIGNIN_FAIL";
+export const REQUIRE_SIGNIN = "REQUIRE_SIGNIN";
+
+export const LOAD_USER_SUCCESS = "LOAD_USER_SUCCESS";
+export const LOAD_USER_FAIL = "LOAD_USER_FAIL";
+export const REQUIRE_LOAD_USER = "REQUIRE_LOAD_USER";
+
+export const CLEAR_ERRORS = "CLEAR_ERRORS";

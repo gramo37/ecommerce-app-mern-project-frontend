@@ -9,6 +9,9 @@ export const ALL_CATEGORY_FAIL = "ALL_CATEGORY_FAIL";
 export const   PRICE = "PRICE";
 export const   PRICE_ERROR = "PRICE_ERROR";
 
+export const   RATINGS = "RATINGS";
+export const   RATINGS_ERROR = "RATINGS_ERROR";
+
 export const   CATEGORY = "CATGORY";
 export const   CATEGORY_ERROR = "CATGORY_ERROR";
 

@@ -1,0 +1,11 @@
+.userDetailsContainer {
+
+}
+
+.hideUserDetails {
+    display: none;
+}
+
+.showUserDetails {
+    display: block;
+}

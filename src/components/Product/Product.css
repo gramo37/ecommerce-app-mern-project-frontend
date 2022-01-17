@@ -91,9 +91,15 @@
     justify-content: space-between;
 }
 
+.filterBoxContainer{
+    display: flex;
+    flex-direction: column;
+}
+
 .filterBox{
-    width: 50vmax;
+    width: 100px;
     margin-left: 20px;
+    padding: 0px 10px;
 }
 
 @media only screen and (max-width: 1400px) {

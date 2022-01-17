@@ -1,14 +1,16 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from "redux-thunk"
 import { composeWithDevTools } from "redux-devtools-extension";
-import { productDetailsReducer, productReducer, categoryReducer, priceFilterReducer, categoryFilterReducer } from './reducers/productReducer';
-
+import { productDetailsReducer, productReducer, categoryReducer, priceFilterReducer, categoryFilterReducer, ratingsFilterReducer } from './reducers/productReducer';
+import { userReducer} from './reducers/userReducer';
 const reducer = combineReducers({
     products: productReducer,
     productDetails: productDetailsReducer,
     category: categoryReducer,               // Reducer for getting categories from categories table in database
     price: priceFilterReducer,
-    categoryFilter: categoryFilterReducer    // Reducer for category filter
+    categoryFilter: categoryFilterReducer,   // Reducer for category filter
+    ratings: ratingsFilterReducer,
+    user: userReducer
 })
 
 let initialState = {};

@@ -12,6 +12,7 @@ const {
     ALL_CATEGORY_FAIL,
     PRICE,
     CATEGORY,
+    RATINGS,
     CLEAR_ERRORS
 } = require("../constants/productConstants")
 
@@ -27,6 +28,7 @@ export const productReducer = (state = { products: [] }, action) => {
             return {
                 loading: false,
                 products: action.payload.products,
+                filteredProductCount: action.payload.products.length,
                 productsCount: action.payload.productsCount
             };
         case ALL_PRODUCT_FAIL:
@@ -104,6 +106,11 @@ export const priceFilterReducer = (state = { price: [0, 25000] }, action) => {
             return {
                 price: action.payload
             }
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            };
         default:
             return state;
     }
@@ -115,6 +122,27 @@ export const categoryFilterReducer = (state = { category: "" }, action) => {
             return {
                 category: action.payload
             }
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            };
+        default:
+            return state;
+    }
+}
+
+export const ratingsFilterReducer = (state = { ratings: 0 }, action) => {
+    switch (action.type) {
+        case RATINGS:
+            return {
+                ratings: action.payload
+            }
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            };
         default:
             return state;
     }
