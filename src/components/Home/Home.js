@@ -50,7 +50,7 @@ const Home = (props) => {
 
     return (
         <>
-            <Navbar showFilter={true} />
+            <Navbar />
             {loading ? <Loader /> : <div className="d-flex h-100 text-center text-white bg-dark homeContainer">
                 <div className="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column homeContent">
                     <main className="px-3">

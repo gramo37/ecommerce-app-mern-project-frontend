@@ -45,7 +45,7 @@ const LoginSignup = () => {
         }
         console.log(document.cookie)
         if(userDetails.isAuthenticated) {
-            navigate('/account')
+            navigate('/profile')
         }
     }, [dispatch, userDetails.isAuthenticated, userDetails.error, alert])
 

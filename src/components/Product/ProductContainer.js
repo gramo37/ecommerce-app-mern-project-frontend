@@ -80,7 +80,7 @@ const ProductContainer = () => {
     return (
         <>
             <Navbar showFilter={true} />
-            <Filters />
+            {/* <Filters /> */}
             <h1 className='text-center m-4'>PRODUCTS</h1>
 
             {loading ? <Loader /> : <div className='container-fluid productContainer mt-2'>

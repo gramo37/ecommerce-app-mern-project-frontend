@@ -18,6 +18,9 @@ import ProductDetailsContainer from './components/Product/ProductDetailsContaine
 import LoginSignup from './components/Login/LoginSignup';
 import { loadUser } from './actions/userAction';
 import UserInfo from './components/Navbar/UserInfo';
+import Profile from './components/Profile/Profile';
+import Dashboard from './components/Profile/Dashboard';
+import Orders from './components/Orders/Orders';
 
 
 function App() {
@@ -37,9 +40,12 @@ function App() {
   return (
     <Router>
       {console.log(user, isAuthenticated)}
-      {isAuthenticated && <UserInfo user={user}/>}
+      {/* {isAuthenticated && <UserInfo user={user}/>} */}
       <Routes>
         <Route exact path="/" element={<Home />} />
+        <Route exact path="/profile" element={<Profile />} />
+        <Route exact path="/dashboard" element={<Dashboard />} />
+        <Route exact path="/orders" element={<Orders />} />
         <Route exact path="about" element={<About />} />
         <Route exact path="products" element={<ProductContainer />} />
         <Route exact path="product/:id/" element={<ProductDetailsContainer />} />

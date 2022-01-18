@@ -9,3 +9,7 @@
 .showUserDetails {
     display: block;
 }
+
+.dropdown-toggle::after {
+    display: none;
+}

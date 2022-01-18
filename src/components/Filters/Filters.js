@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -6,7 +6,8 @@ import Slider from '@mui/material/Slider';
 import { getPriceFilter, getCategoryFilter, getRatingFilter } from '../../actions/productAction'
 import { useDispatch, useSelector } from "react-redux"
 import Select from '@mui/material/Select';
-import { getCategoryList } from '../../actions/productAction'
+import { getCategoryList } from '../../actions/productAction';
+import FilterListSharpIcon from '@mui/icons-material/FilterListSharp';
 
 const Filters = () => {
 
@@ -51,44 +52,54 @@ const Filters = () => {
     }
     return (
         <>
-            <div className='filterBoxContainer'>
-                <div className="filterBox">
-                    <Typography>Price</Typography>
-                    <Slider
-                        value={price}
-                        onChange={priceHandler}
-                        valueLabelDisplay='auto'
-                        aria-labelledby="range-slider"
-                        min={0}
-                        max={25000}
-                    />
-                </div>
-                <div className="filterBox">
-                    <Typography>Ratings</Typography>
-                    <Slider
-                        value={ratings}
-                        onChange={ratingHandler}
-                        valueLabelDisplay='auto'
-                        aria-labelledby="range-slider"
-                        min={0}
-                        max={10}
-                    />
-                </div>
-                <FormControl className='px-2 filterBox' variant="standard" sx={{ m: 1, minWidth: 120 }}>
-                    <Typography>Categories</Typography>
-                    <Select
-                        labelId="demo-simple-select-standard-label"
-                        id="demo-simple-select-standard"
-                        value={category}
-                        onChange={categoryHandler}
-                        label="Category"
-                    >
-                        <MenuItem key={"all"} value={""}>All Products</MenuItem>
-                        {key.category.category && key.category.category.map((item) => (
-                            <MenuItem key={item.id} value={item.category !== undefined ? item.category : "Food"}>{capitalize(item.category !== undefined ? item.category : "food")}</MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
+            <div className="nav-item dropdown HeaderOptionContainer">
+                <a className="nav-link dropdown-toggle p-0" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <FilterListSharpIcon />
+                </a>
+                <h6>Filters</h6>
+                <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li>
+                        <div className="filterBox">
+                            <Typography>Price</Typography>
+                            <Slider
+                                value={price}
+                                onChange={priceHandler}
+                                valueLabelDisplay='auto'
+                                aria-labelledby="range-slider"
+                                min={0}
+                                max={25000}
+                            />
+                        </div>
+                        <div className="filterBox">
+                            <Typography>Ratings</Typography>
+                            <Slider
+                                value={ratings}
+                                onChange={ratingHandler}
+                                valueLabelDisplay='auto'
+                                aria-labelledby="range-slider"
+                                min={0}
+                                max={10}
+                            />
+                        </div>
+                    </li>
+                    <li>
+                        <FormControl className='px-2 filterBox' variant="standard" sx={{ m: 1, minWidth: 120 }}>
+                            <Typography>Categories</Typography>
+                            <Select
+                                labelId="demo-simple-select-standard-label"
+                                id="demo-simple-select-standard"
+                                value={category}
+                                onChange={categoryHandler}
+                                label="Category"
+                            >
+                                <MenuItem key={"all"} value={""}>All Products</MenuItem>
+                                {key.category.category && key.category.category.map((item) => (
+                                    <MenuItem key={item.id} value={item.category !== undefined ? item.category : "Food"}>{capitalize(item.category !== undefined ? item.category : "food")}</MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    </li>
+                </ul>
             </div>
         </>
     )

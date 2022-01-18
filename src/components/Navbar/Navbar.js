@@ -1,13 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from "react-router-dom";
-import Search from '../Search/Search';
 import { getCategoryList } from '../../actions/productAction'
 import { useDispatch, useSelector } from "react-redux"
 import { logoutUser, clearUserError } from '../../actions/userAction';
 import { loadUser } from "../../actions/userAction"
 import UserInfo from './UserInfo';
+import SearchIcon from '@mui/icons-material/Search'
+import HeaderOption from './HeaderOption';
+import logo from './linkedin.png'
+import { Home } from '@mui/icons-material';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import InfoIcon from '@mui/icons-material/Info';
+import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
+import Search from "../Search/Search"
+import Filters from "../Filters/Filters"
 
-const Navbar = () => {
+const Navbar = (props) => {
 
     // Variables
     const dispatch = useDispatch();
@@ -40,6 +48,51 @@ const Navbar = () => {
 
     return (
         <>
+            <>
+                <div className="header">
+                    <div className="headerLeft">
+                        <img src={logo} alt="linkedIn" />
+                        <div className="headerSearch">
+                            <SearchIcon />
+                            {/* <input type="text" /> */}
+                            <Search />
+                            
+                        </div>
+                    </div>
+                    <div className="headerRight">
+
+                        <HeaderOption title="Home" Icon={Home} linkTo="/" />
+                        <HeaderOption title="Products" Icon={ShoppingCartIcon} linkTo="/products" />
+                        <HeaderOption title="About" Icon={InfoIcon} linkTo="/about" />
+                        <HeaderOption title="Contact" Icon={PermContactCalendarIcon} linkTo="/contact" />
+                        {userDetails.isAuthenticated && <UserInfo user={userDetails} />}
+                        {!userDetails.isAuthenticated && <div className="nav-item">
+                            <HeaderOption title="Login" linkTo="/login" avatar={true} />
+                        </div>}
+                        
+                        {props.showFilter && <Filters />}
+                        {/* <HeaderOption title="Contact" Icon={PermContactCalendarIcon} linkTo="/contact" /> */}
+                    </div>
+                </div>
+
+            </>
+        </>
+    )
+}
+
+export default Navbar;
+
+
+
+
+
+
+
+
+
+
+
+{/* <>
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <div className="container-fluid">
                     <Link className="navbar-brand" to="\">GramoKart</Link>
@@ -60,18 +113,27 @@ const Navbar = () => {
                             <li className="nav-item">
                                 <Link className="nav-link active" aria-current="page" to="/contact">Contact</Link>
                             </li>
-                            {/* {userDetails.isAuthenticated && <UserInfo user={userDetails} />} */}
-                            {/* <li className="nav-item">
+                            
+                            {!userDetails.isAuthenticated && <li className="nav-item">
+                                <Link className="nav-link active" aria-current="page" to="/login">Login/SignUp</Link>
+                            </li>} */}
+{/* <li className="nav-item dropdown"> */ }
+{/* {userDetails.isAuthenticated && <UserInfo user={userDetails} />} */ }
+{/* <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a className="dropdown-item" href="#">Dashboard</a></li>
+                                    <li><a className="dropdown-item" href="#">Account info</a></li>
+                                    <li><hr className="dropdown-divider" /></li>
+                                    <li><Link className="dropdown-item" to="/login">Logout</Link></li>
+                                </ul> */}
+{/* </li> */ }
+// {userDetails.isAuthenticated && <UserInfo user={userDetails} />}
+{/* <li className="nav-item">
                                 {isAuthenticatedUser ? <Link className="nav-link active" aria-current="page" to="/login" onClick={() => logout()}>Logout</Link> : <Link className="nav-link active" aria-current="page" to="/login">Login</Link>}
                             </li> */}
-                        </ul>
-                        <Search />
-                        
-                    </div>
-                </div>
-            </nav>
-        </>
-    )
-}
+        //                 </ul>
+        //                 <Search />
 
-export default Navbar;
+        //             </div>
+        //         </div>
+        //     </nav>
+        // </>
