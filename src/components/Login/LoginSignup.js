@@ -38,10 +38,6 @@ const LoginSignup = () => {
         (state) => state.user
     )
 
-    // const delay = (t) => {
-
-    // }
-
     useEffect(() => {
         if (userDetails.error) {
             // dispatch(clearUserError())
@@ -49,7 +45,7 @@ const LoginSignup = () => {
         }
         console.log(document.cookie)
         if(userDetails.isAuthenticated) {
-            navigate('/products')
+            navigate('/account')
         }
     }, [dispatch, userDetails.isAuthenticated, userDetails.error, alert])
 

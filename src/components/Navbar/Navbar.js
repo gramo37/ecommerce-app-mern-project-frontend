@@ -4,7 +4,7 @@ import Search from '../Search/Search';
 import { getCategoryList } from '../../actions/productAction'
 import { useDispatch, useSelector } from "react-redux"
 import { logoutUser, clearUserError } from '../../actions/userAction';
-import {loadUser} from "../../actions/userAction"
+import { loadUser } from "../../actions/userAction"
 import UserInfo from './UserInfo';
 
 const Navbar = () => {
@@ -28,14 +28,13 @@ const Navbar = () => {
             return alert.error(key.error);
         }
         // dispatch(loadUser())
-        
+
         setisAuthenticatedUser(userDetails.isAuthenticated)
     }, [dispatch, userDetails, key.error])
 
     // Functions
     const logout = async () => {
         await dispatch(logoutUser())
-        await dispatch(clearUserError())
         navigate('/login')
     }
 
@@ -61,12 +60,13 @@ const Navbar = () => {
                             <li className="nav-item">
                                 <Link className="nav-link active" aria-current="page" to="/contact">Contact</Link>
                             </li>
-                            <li className="nav-item">
+                            {/* {userDetails.isAuthenticated && <UserInfo user={userDetails} />} */}
+                            {/* <li className="nav-item">
                                 {isAuthenticatedUser ? <Link className="nav-link active" aria-current="page" to="/login" onClick={() => logout()}>Logout</Link> : <Link className="nav-link active" aria-current="page" to="/login">Login</Link>}
-                            </li>
+                            </li> */}
                         </ul>
                         <Search />
-                        {/* {userDetails.isAuthenticated && <UserInfo user={userDetails}/>} */}
+                        
                     </div>
                 </div>
             </nav>

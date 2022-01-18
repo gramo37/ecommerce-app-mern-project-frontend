@@ -13,30 +13,31 @@ import {
   Routes,
   Route
 } from "react-router-dom";
-import React from 'react';
+import React, {useState} from 'react';
 import ProductDetailsContainer from './components/Product/ProductDetailsContainer';
 import LoginSignup from './components/Login/LoginSignup';
-// import { loadUser } from './actions/userAction';
-// import UserInfo from './components/Navbar/UserInfo';
+import { loadUser } from './actions/userAction';
+import UserInfo from './components/Navbar/UserInfo';
 
 
 function App() {
 
   const { user, isAuthenticated } = useSelector(state => state.user)
 
+  console.log(user)
   React.useEffect(() => {
     WebFont.load({
       google: {
         families: ["Roboto", "Droid Sans", "Chilanka"]
       }
     })
-
-    // store.dispatch(loadUser())
+    store.dispatch(loadUser())
   }, []);
 
   return (
     <Router>
-      {/* {isAuthenticated && <UserInfo user={user} />} */}
+      {console.log(user, isAuthenticated)}
+      {isAuthenticated && <UserInfo user={user}/>}
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="about" element={<About />} />

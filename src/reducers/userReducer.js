@@ -44,19 +44,19 @@ export const userReducer = (state = { user: [] }, action) => {
 
         case REQUIRE_LOGOUT:
             return {
-                loading: true,
-                isAuthenticated: true
+                loading: true
             }
         case LOGOUT_SUCCESS:
             return {
                 loading: false,
-                isAuthenticated: false,
-                user: action.payload              // Experiment with message
+                isAuthenticated: false,         // Experiment with message
+                user: null
             }
         case LOGOUT_FAIL:
             return {
-                loading: false,
-                isAuthenticated: true
+                ...state,
+                error: action.payload,
+                loading: false
             }
         case CLEAR_ERRORS:
             return {

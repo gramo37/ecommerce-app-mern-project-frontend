@@ -47,6 +47,7 @@ const ProductContainer = () => {
             return alert.error(error);
         }
         updateProduct()
+        console.log("This got re rendered")
     }, [dispatch, error, alert, keyword, currentPage, price, category, ratings])
 
     useEffect(() => {

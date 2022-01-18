@@ -86,20 +86,17 @@ export const logoutUser = () => async (dispatch) => {
         dispatch({
             type: REQUIRE_LOGOUT
         })
-        const link = `/api/v2/logout`
-        const { data } = await axios.post(link)
-        console.log(data)
+        
+        await axios.post(`/api/v2/logout`)
 
         // Delete the token from cookie
         deleteCookie("token")
 
         dispatch({
-            type: LOGOUT_SUCCESS,
-            payload: data
+            type: LOGOUT_SUCCESS
         })
 
     } catch (error) {
-        console.log(error.response.data.message)
         dispatch({
             type: LOGOUT_FAIL,
             payload: error.response.data
