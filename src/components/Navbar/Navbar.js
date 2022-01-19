@@ -1,9 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { Link, useNavigate } from "react-router-dom";
-import { getCategoryList } from '../../actions/productAction'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from "react-redux"
-import { logoutUser, clearUserError } from '../../actions/userAction';
-import { loadUser } from "../../actions/userAction"
 import UserInfo from './UserInfo';
 import SearchIcon from '@mui/icons-material/Search'
 import HeaderOption from './HeaderOption';
@@ -19,8 +15,6 @@ const Navbar = (props) => {
 
     // Variables
     const dispatch = useDispatch();
-    const navigate = useNavigate();
-    const [isAuthenticatedUser, setisAuthenticatedUser] = useState(false)
 
     // useSelectors
     const key = useSelector(
@@ -35,16 +29,9 @@ const Navbar = (props) => {
         if (key.error) {
             return alert.error(key.error);
         }
-        // dispatch(loadUser())
-
-        setisAuthenticatedUser(userDetails.isAuthenticated)
     }, [dispatch, userDetails, key.error])
 
     // Functions
-    const logout = async () => {
-        await dispatch(logoutUser())
-        navigate('/login')
-    }
 
     return (
         <>
@@ -54,7 +41,6 @@ const Navbar = (props) => {
                         <img src={logo} alt="linkedIn" />
                         <div className="headerSearch">
                             <SearchIcon />
-                            {/* <input type="text" /> */}
                             <Search />
                             
                         </div>
@@ -71,7 +57,6 @@ const Navbar = (props) => {
                         </div>}
                         
                         {props.showFilter && <Filters />}
-                        {/* <HeaderOption title="Contact" Icon={PermContactCalendarIcon} linkTo="/contact" /> */}
                     </div>
                 </div>
 

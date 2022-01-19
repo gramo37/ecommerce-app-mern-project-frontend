@@ -1,5 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react'
-import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import React, { useEffect } from 'react'
 import "./userInfo.css"
 import { logoutUser } from '../../actions/userAction';
 import { useDispatch } from 'react-redux';
@@ -7,10 +6,12 @@ import { useAlert } from 'react-alert';
 import { Link } from 'react-router-dom';
 import Avatar from '@mui/material/Avatar';
 import { deepOrange } from '@mui/material/colors';
+import { useNavigate } from 'react-router-dom';
 
 const UserInfo = ({ user }) => {
 
     const alert = useAlert()
+    const navigate = useNavigate()
     const dispatch = useDispatch()
 
     useEffect(() => {
@@ -18,8 +19,14 @@ const UserInfo = ({ user }) => {
     }, [])
 
     const logout = () => {
-        dispatch(logoutUser())
-        alert.success("Logout successfully")
+        if (window.confirm("Are you sure you want to Logout?") == true) {
+            dispatch(logoutUser())
+            alert.success("Logout successfully")
+            navigate("/products")
+          } else {
+            console.log("Logout Fail");
+          }
+        
     }
 
     return (

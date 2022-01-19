@@ -13,15 +13,14 @@ import {
   Routes,
   Route
 } from "react-router-dom";
-import React, {useState} from 'react';
+import React from 'react';
 import ProductDetailsContainer from './components/Product/ProductDetailsContainer';
 import LoginSignup from './components/Login/LoginSignup';
 import { loadUser } from './actions/userAction';
-import UserInfo from './components/Navbar/UserInfo';
 import Profile from './components/Profile/Profile';
 import Dashboard from './components/Profile/Dashboard';
 import Orders from './components/Orders/Orders';
-
+import EditProfile from "./components/Profile/EditProfile"
 
 function App() {
 
@@ -34,6 +33,7 @@ function App() {
         families: ["Roboto", "Droid Sans", "Chilanka"]
       }
     })
+    // Get the user after refresh
     store.dispatch(loadUser())
   }, []);
 
@@ -44,6 +44,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/profile" element={<Profile />} />
+        <Route exact path="editProfile" element={<EditProfile />} />
         <Route exact path="/dashboard" element={<Dashboard />} />
         <Route exact path="/orders" element={<Orders />} />
         <Route exact path="about" element={<About />} />
