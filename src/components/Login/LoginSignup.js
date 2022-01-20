@@ -23,8 +23,10 @@ const LoginSignup = () => {
             password: "",
         }
     )
+
     const [avatar, setavatar] = useState()
     const [avatarPreview, setavatarPreview] = useState("/logo192.png")
+
     const { name, email, password } = user
     const alert = useAlert()
     let navigate = useNavigate();
@@ -44,7 +46,7 @@ const LoginSignup = () => {
             return alert.error(userDetails.error.message);
         }
         console.log(document.cookie)
-        if(userDetails.isAuthenticated) {
+        if (userDetails.isAuthenticated) {
             navigate('/profile')
         }
     }, [dispatch, userDetails.isAuthenticated, userDetails.error, alert])
@@ -81,11 +83,14 @@ const LoginSignup = () => {
         myForm.set("email", email);
         myForm.set("password", password);
         myForm.set("avatar", avatar);
+        // Call the compress function compressImg()
+
         dispatch(signinUser(name, email, password, avatar))
 
     }
     const registerDataChange = (e) => {
         // If avatar is uploaded
+        // console.log(e.target.files[0])
         if (e.target.name === "avatar") {
             const reader = new FileReader();
 
@@ -167,9 +172,11 @@ const LoginSignup = () => {
                                 required
                             />
                         </div>
+                        {/* Image Logic */}
                         <div className="registerImage">
                             <img src={avatarPreview} alt="Avatar Preview" />
                             <input
+                                id="img-input"
                                 type="file"
                                 name="avatar"
                                 accept='image/*'

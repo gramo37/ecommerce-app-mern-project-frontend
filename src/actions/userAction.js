@@ -12,6 +12,12 @@ import {
     LOAD_USER_SUCCESS,
     LOAD_USER_FAIL,
     REQUIRE_LOAD_USER,
+    REQUIRE_UPDATE_PROFILE,
+    UPDATE_PROFILE_SUCCESS,
+    UPDATE_PROFILE_FAIL,
+    REQUIRE_UPDATE_PASSWORD,
+    UPDATE_PASSWORD_SUCCESS,
+    UPDATE_PASSWORD_FAIL,
     CLEAR_ERRORS
 } from "../constants/userConstants";
 
@@ -86,7 +92,7 @@ export const logoutUser = () => async (dispatch) => {
         dispatch({
             type: REQUIRE_LOGOUT
         })
-        
+
         await axios.post(`/api/v2/logout`)
 
         // Delete the token from cookie
@@ -137,6 +143,64 @@ export const signinUser = (name, email, password, avatar) => async (dispatch) =>
         })
 
     }
+}
+
+export const updateUserProfile = (name, email, avatar) => async (dispatch) => {
+    try {
+        dispatch({
+            type: REQUIRE_UPDATE_PROFILE
+        })
+
+        const link = `api/v2/updateProfile`
+
+        let userDetails = {}
+
+
+        userDetails = {
+            name: name,
+            email: email,
+            avatar: avatar
+        }
+
+        const config = { headers: { "Content-Type": "multiport/form-data" } }
+        const { data } = await axios.put(link, userDetails)
+
+        dispatch({
+            type: UPDATE_PROFILE_SUCCESS,
+            payload: data
+        })
+    } catch (error) {
+        dispatch({
+            type: UPDATE_PROFILE_FAIL,
+            payload: error.response.data
+        })
+    }
+
+}
+
+export const changePassword = (userPassword) => async (dispatch) => {
+    try {
+        dispatch({
+            type: REQUIRE_UPDATE_PASSWORD
+        })
+
+        const link = `api/v2/updatePassword`
+
+        const { data } = await axios.put(link, userPassword)
+
+        dispatch({
+            type: UPDATE_PASSWORD_SUCCESS,
+            payload: data
+        })
+    } catch (error) {
+        dispatch({
+            type: UPDATE_PASSWORD_FAIL,
+            payload: error.response.data
+        })
+    }
+
+
+
 }
 
 export const clearUserError = () => async (dispatch) => {

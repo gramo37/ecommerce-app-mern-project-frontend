@@ -21,6 +21,8 @@ import Profile from './components/Profile/Profile';
 import Dashboard from './components/Profile/Dashboard';
 import Orders from './components/Orders/Orders';
 import EditProfile from "./components/Profile/EditProfile"
+import UpdatePassword from './components/Profile/UpdatePassword';
+import ProtectedRoute from "./components/Route/ProtectedRoute"
 
 function App() {
 
@@ -39,12 +41,12 @@ function App() {
 
   return (
     <Router>
-      {console.log(user, isAuthenticated)}
       {/* {isAuthenticated && <UserInfo user={user}/>} */}
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/profile" element={<Profile />} />
         <Route exact path="editProfile" element={<EditProfile />} />
+        <Route exact path="updatePassword" element={<UpdatePassword />} />
         <Route exact path="/dashboard" element={<Dashboard />} />
         <Route exact path="/orders" element={<Orders />} />
         <Route exact path="about" element={<About />} />

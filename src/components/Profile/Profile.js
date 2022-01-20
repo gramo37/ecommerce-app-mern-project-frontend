@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import Navbar from '../Navbar/Navbar'
 import { useSelector } from 'react-redux'
 import './profile.css'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
 import ContentPasteGoIcon from '@mui/icons-material/ContentPasteGo';
@@ -14,8 +14,9 @@ const Profile = () => {
         const user = useSelector(
             (state) => state.user
         )
+        console.log("no - error")
 
-        const { name, email, role, avatar, createdAt } = user.user.user
+        const { name, email, role, avatar, createdAt, lastUpdated } = user.user.user
 
         return (
             <>{user.loading ? <Loader /> : <>
@@ -38,6 +39,12 @@ const Profile = () => {
                         <div>
                             <h4>Joined On</h4>
                             <p>{String(createdAt).substr(0, 10)}</p>
+                            {/* <p>{createdAt}</p> */}
+                        </div>
+                        <div>
+                            <h4>Last Updated On:</h4>
+                            <p>{String(lastUpdated).substr(0, 10)}</p>
+                            {/* <p>{createdAt}</p> */}
                         </div>
                         <div>
                             <h4>Orders</h4>
@@ -49,11 +56,11 @@ const Profile = () => {
             </>
         )
     } catch (error) {
-        console.log(error)
+        console.log("error")
         return (
             <>
                 <Navbar />
-                <div className='container'><h1 className='text-center'>Sorry Profile not found.<br />Please Login.</h1></div>
+                <Loader />
             </>
         )
     }
@@ -61,3 +68,8 @@ const Profile = () => {
 }
 
 export default Profile
+
+
+
+// Problems
+// 1. Why the hell does this render 3 times when I refresh

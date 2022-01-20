@@ -23,16 +23,16 @@
     height: 300px;
 }
 
-.rightProfile > div:nth-child(4) {
+.rightProfile > div:last-child {
     display: flex;
     flex-direction: column;
 }
 
-.leftProfile > a, .rightProfile > div:nth-child(4) > a {
+.leftProfile > a, .rightProfile > div:last-child > a {
     text-decoration: none;
     color: rgb(65, 65, 65);
 }
 
-.leftProfile > a:hover, .rightProfile > div:nth-child(4) > a:hover {
+.leftProfile > a:hover, .rightProfile > div:last-child > a:hover {
     color: rgb(161, 161, 161);
 }

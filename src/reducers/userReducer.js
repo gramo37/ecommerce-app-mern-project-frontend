@@ -11,6 +11,12 @@ const {
     LOAD_USER_SUCCESS,
     LOAD_USER_FAIL,
     REQUIRE_LOAD_USER,
+    REQUIRE_UPDATE_PROFILE,
+    UPDATE_PROFILE_SUCCESS,
+    UPDATE_PROFILE_FAIL,
+    REQUIRE_UPDATE_PASSWORD,
+    UPDATE_PASSWORD_SUCCESS,
+    UPDATE_PASSWORD_FAIL,
     LOGOUT_FAIL
 } = require("../constants/userConstants")
 
@@ -57,6 +63,26 @@ export const userReducer = (state = { user: [] }, action) => {
                 ...state,
                 error: action.payload,
                 loading: false
+            }
+        case REQUIRE_UPDATE_PROFILE:
+        case REQUIRE_UPDATE_PASSWORD:
+            return {
+                ...state,
+                loading: true
+            }
+        case UPDATE_PROFILE_SUCCESS:
+        case UPDATE_PASSWORD_SUCCESS:
+            return {
+                loading: false,
+                user: action.payload,
+                isAuthenticated: true
+            }
+        case UPDATE_PROFILE_FAIL:
+        case UPDATE_PASSWORD_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
             }
         case CLEAR_ERRORS:
             return {
