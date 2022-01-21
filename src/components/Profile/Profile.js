@@ -14,7 +14,6 @@ const Profile = () => {
         const user = useSelector(
             (state) => state.user
         )
-        console.log("no - error")
 
         const { name, email, role, avatar, createdAt, lastUpdated } = user.user.user
 

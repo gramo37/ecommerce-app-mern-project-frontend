@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { changePassword } from '../../actions/userAction';
 import { useAlert } from "react-alert";
+import Loader from '../Loader/Loader';
 
 const UpdatePassword = () => {
 
@@ -45,7 +46,7 @@ const UpdatePassword = () => {
 
     return (
         <>
-            <Navbar />
+            {userDetails.loading ? <Loader /> : <><Navbar />
             <h1 className="text-center m-2">Change Password</h1>
             <div className="container">
                 <form onSubmit={updatePassword} onChange={handleChange}>
@@ -63,7 +64,7 @@ const UpdatePassword = () => {
                     </div>
                     <button type="submit" className="btn btn-primary">Submit</button>
                 </form>
-            </div>
+            </div></>}
         </>
     )
 };

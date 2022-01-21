@@ -74,32 +74,33 @@ const EditProfile = () => {
       }
     }
 
-    return <>
-      <Navbar />
-      <h1 className='text-center m-2'>Change Profile</h1>
-      <div className="container">
-        <form onChange={editUserDetails} onSubmit={submitUserDetails}>
-          <div className="mb-3">
-            <label htmlFor="exampleInputEmail1" className="form-label">Name:</label>
-            <input type="text" name="name" value={user.name} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
-          </div>
-          <div className="mb-3">
-            <label htmlFor="exampleInputPassword1" className="form-label">Email</label>
-            <input type="text" name="email" value={user.email} className="form-control" id="exampleInputPassword1" />
-          </div>
-          <div>
-            <label htmlFor="exampleInputPassword1" className="form-label">Avatar</label>
-            <img width={"100px"} height={"100px"} src={avatarPreview} alt="Avatar Preview" />
-            <input
-              type="file"
-              name="avatar"
-              accept='image/*'
-            />
-          </div>
-          <button type="submit" className="btn btn-primary m-2" >Submit</button>
-        </form>
-      </div>
-    </>
+    return (
+      <>
+        {userDetails.loading ? <Loader /> : <><Navbar />
+        <h1 className='text-center m-2'>Change Profile</h1>
+        <div className="container">
+          <form onChange={editUserDetails} onSubmit={submitUserDetails}>
+            <div className="mb-3">
+              <label htmlFor="exampleInputEmail1" className="form-label">Name:</label>
+              <input type="text" name="name" value={user.name} className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
+            </div>
+            <div className="mb-3">
+              <label htmlFor="exampleInputPassword1" className="form-label">Email</label>
+              <input type="text" name="email" value={user.email} className="form-control" id="exampleInputPassword1" />
+            </div>
+            <div>
+              <label htmlFor="exampleInputPassword1" className="form-label">Avatar</label>
+              <img width={"100px"} height={"100px"} src={avatarPreview} alt="Avatar Preview" />
+              <input
+                type="file"
+                name="avatar"
+                accept='image/*'
+              />
+            </div>
+            <button type="submit" className="btn btn-primary m-2" >Submit</button>
+          </form>
+        </div></>}
+      </>)
   } catch (error) {
     return (
       <>

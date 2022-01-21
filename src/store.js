@@ -3,6 +3,7 @@ import thunk from "redux-thunk"
 import { composeWithDevTools } from "redux-devtools-extension";
 import { productDetailsReducer, productReducer, categoryReducer, priceFilterReducer, categoryFilterReducer, ratingsFilterReducer } from './reducers/productReducer';
 import { userReducer} from './reducers/userReducer';
+import { orderReducer } from './reducers/orderReducer';
 const reducer = combineReducers({
     products: productReducer,
     productDetails: productDetailsReducer,
@@ -10,7 +11,8 @@ const reducer = combineReducers({
     price: priceFilterReducer,
     categoryFilter: categoryFilterReducer,   // Reducer for category filter
     ratings: ratingsFilterReducer,
-    user: userReducer
+    user: userReducer,
+    orders: orderReducer
 })
 
 let initialState = {};
