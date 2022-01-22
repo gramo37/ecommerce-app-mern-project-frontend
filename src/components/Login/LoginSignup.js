@@ -45,7 +45,6 @@ const LoginSignup = () => {
             // dispatch(clearUserError())
             return alert.error(userDetails.error.message);
         }
-        console.log(document.cookie)
         if (userDetails.isAuthenticated) {
             navigate('/profile')
         }

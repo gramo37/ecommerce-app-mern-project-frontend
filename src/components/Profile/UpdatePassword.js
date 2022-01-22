@@ -25,14 +25,14 @@ const UpdatePassword = () => {
 
     useEffect(() => {
         if (userDetails.error && !userDetails.loading) {
-          setUpdateSuccessful(false)
-          return alert.error(userDetails.error.message)
+            setUpdateSuccessful(false)
+            return alert.error(userDetails.error.message)
         }
         else if (userDetails.user.success && updateSuccessful && !userDetails.loading && !userDetails.error) {
-          navigate("/profile")
-          return alert.success("Successfully Updated")
+            navigate("/profile")
+            return alert.success("Successfully Updated")
         }
-      }, [userDetails])
+    }, [userDetails])
 
     const updatePassword = async (e) => {
         e.preventDefault()
@@ -47,24 +47,24 @@ const UpdatePassword = () => {
     return (
         <>
             {userDetails.loading ? <Loader /> : <><Navbar />
-            <h1 className="text-center m-2">Change Password</h1>
-            <div className="container">
-                <form onSubmit={updatePassword} onChange={handleChange}>
-                    <div className="mb-3">
-                        <label htmlFor="exampleInputEmail1" className="form-label">Current Password</label>
-                        <input type="password" className="form-control" id="exampleInputEmail1" name="currentPassword" aria-describedby="emailHelp" />
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="exampleInputPassword1" className="form-label">New Password</label>
-                        <input type="password" className="form-control" name="newPassword" id="exampleInputPassword1" />
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="exampleInputPassword1" className="form-label">Confirm Password</label>
-                        <input type="password" className="form-control" name="confirmPassword" id="exampleInputPassword2" />
-                    </div>
-                    <button type="submit" className="btn btn-primary">Submit</button>
-                </form>
-            </div></>}
+                <h1 className="text-center m-2">Change Password</h1>
+                <div className="container">
+                    <form onSubmit={updatePassword} onChange={handleChange}>
+                        <div className="mb-3">
+                            <label htmlFor="exampleInputEmail1" className="form-label">Current Password</label>
+                            <input type="password" className="form-control" id="exampleInputEmail1" name="currentPassword" aria-describedby="emailHelp" />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="exampleInputPassword1" className="form-label">New Password</label>
+                            <input type="password" className="form-control" name="newPassword" id="exampleInputPassword1" />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="exampleInputPassword1" className="form-label">Confirm Password</label>
+                            <input type="password" className="form-control" name="confirmPassword" id="exampleInputPassword2" />
+                        </div>
+                        <button type="submit" className="btn btn-primary">Submit</button>
+                    </form>
+                </div></>}
         </>
     )
 };

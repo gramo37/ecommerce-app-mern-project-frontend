@@ -7,7 +7,6 @@ import Home from './components/Home/Home'
 import WebFont from 'webfontloader';
 import store from './store'
 import { useSelector } from "react-redux"
-
 import {
   BrowserRouter as Router,
   Routes,
@@ -22,20 +21,20 @@ import Dashboard from './components/Profile/Dashboard';
 import Orders from './components/Orders/Orders';
 import EditProfile from "./components/Profile/EditProfile"
 import UpdatePassword from './components/Profile/UpdatePassword';
-import ProtectedRoute from "./components/Route/ProtectedRoute"
+import ForgotPassword from './components/Login/ForgotPassword';
+import ResetPassword from './components/Login/ResetPassword';
 
 function App() {
 
   const { user, isAuthenticated } = useSelector(state => state.user)
 
-  console.log(user)
   React.useEffect(() => {
     WebFont.load({
       google: {
         families: ["Roboto", "Droid Sans", "Chilanka"]
       }
     })
-    // Get the user after refresh
+    // Get the user after refresh - very imp code
     store.dispatch(loadUser())
   }, []);
 
@@ -45,6 +44,8 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/profile" element={<Profile />} />
+        <Route path="api/v2/password/reset/:token" element={<ResetPassword />} />
+        <Route exact path="/forgotPassword" element={<ForgotPassword />} />
         <Route exact path="editProfile" element={<EditProfile />} />
         <Route exact path="updatePassword" element={<UpdatePassword />} />
         <Route exact path="/dashboard" element={<Dashboard />} />

@@ -18,6 +18,12 @@ import {
     REQUIRE_UPDATE_PASSWORD,
     UPDATE_PASSWORD_SUCCESS,
     UPDATE_PASSWORD_FAIL,
+    REQUIRE_FORGOT_PASSWORD,
+    MAIL_SENT_SUCCESS,
+    MAIL_SENT_FAIL,
+    REQUIRE_RESET_PASSWORD,
+    RESET_PASSWORD_SUCCESS,
+    RESET_PASSWORD_FAIL,
     CLEAR_ERRORS
 } from "../constants/userConstants";
 
@@ -198,9 +204,54 @@ export const changePassword = (userPassword) => async (dispatch) => {
             payload: error.response.data
         })
     }
+}
 
+export const sendMail = (email) => async (dispatch) => {
+    try {
+        dispatch({
+            type: REQUIRE_FORGOT_PASSWORD,
+        })
 
+        const link = `api/v2/password/reset/`
+        const { data } = await axios.post(link, { email: email })
 
+        dispatch({
+            type: MAIL_SENT_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: MAIL_SENT_FAIL,
+            payload: error.response.data
+        })
+    }
+
+}
+
+export const resetPassword = (token, newPassword, confirmPassword) => async (dispatch) => {
+    try {
+        dispatch({
+            type: REQUIRE_RESET_PASSWORD
+        })
+
+        const link = `${token}`
+
+        const { data } = await axios.put(link, {
+            password: newPassword,
+            confirmPassword: confirmPassword
+        })
+
+        dispatch({
+            type: RESET_PASSWORD_SUCCESS,
+            payload: data
+        })
+    } catch (error) {
+        dispatch({
+            type: RESET_PASSWORD_FAIL,
+            payload: error.response.data
+        })
+    }
 }
 
 export const clearUserError = () => async (dispatch) => {

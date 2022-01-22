@@ -7,8 +7,6 @@ import { useAlert } from "react-alert";
 import Loader from '../Loader/Loader'
 import { useLocation } from 'react-router-dom';
 import Navbar from '../Navbar/Navbar'
-import Filters from '../Filters/Filters'
-import { loadUser } from '../../actions/userAction';
 import { clearUserError } from '../../actions/userAction'
 
 const ProductContainer = () => {
