@@ -13,6 +13,9 @@ const {
     PRICE,
     CATEGORY,
     RATINGS,
+    ADD_TO_CART_SUCCESS,
+    ADD_TO_CART_FAIL,
+    REMOVE_ITEM,
     CLEAR_ERRORS
 } = require("../constants/productConstants")
 
@@ -145,5 +148,57 @@ export const ratingsFilterReducer = (state = { ratings: 0 }, action) => {
             };
         default:
             return state;
+    }
+}
+
+export const addToCartReducer = (state = { cartItems: [] }, action) => {
+    switch (action.type) {
+        case REMOVE_ITEM:
+            return {
+                ...state,
+                cartItems: action.payload
+            }
+        case ADD_TO_CART_SUCCESS:
+            // Item Added to cart
+            const item = action.payload;
+
+            // Find if the item already exists in state.cartItems
+            // find method finds the first occurance of any item in the array
+            const isItemExist = state.cartItems.find(
+                (i) => i.product === item.product
+            )
+
+            // Old item is added
+            if (isItemExist) {
+                // state.cartItems.map((i) => {
+                //     if (i.product === item.product) {
+                //         i.quantity += item.quantity
+                //     }
+                // })
+                // return {
+                //     ...state
+                // }
+                return {
+                    ...state,
+                    cartItems: state.cartItems.map((i) =>
+                        i.product === isItemExist.product ? item : i
+                    ),
+                };
+            }
+            // New Item is added to the cart
+            else {
+                return {
+                    ...state,
+                    cartItems: [...state.cartItems, item],
+                };
+            }
+
+
+        case ADD_TO_CART_FAIL:
+            return {
+                error: action.payload
+            }
+        default:
+            return state
     }
 }

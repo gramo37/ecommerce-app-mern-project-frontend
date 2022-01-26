@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Carousel } from 'react-responsive-carousel';
 import { getProductDetails } from '../../actions/productAction'
 import { useDispatch, useSelector } from "react-redux"
@@ -7,13 +7,17 @@ import { useParams } from "react-router-dom"
 import '../../../node_modules/react-responsive-carousel/lib/styles/carousel.min.css'
 import './Product.css'
 import ProductReviews from './ProductReviews';
-import {useAlert} from "react-alert";
+import { useAlert } from "react-alert";
 import Loader from '../Loader/Loader';
 import Navbar from '../Navbar/Navbar';
+import { addToCart } from "../../actions/productAction"
 
 const ProductDetailsContainer = () => {
 
-    const alert = useAlert()
+    const alert = useAlert();
+    const [quantity, setQuantity] = useState(1);
+    const [quantityInCart, setquantityInCart] = useState(0)
+
     let { id } = useParams();
     const dispatch = useDispatch();
 
@@ -21,11 +25,22 @@ const ProductDetailsContainer = () => {
         (state) => state.productDetails
     )
 
+    const cart = useSelector(
+        (state) => state.cart
+    )
+
     useEffect(() => {
-        if(error){
+        if (error) {
             return alert.error(error);
         }
         dispatch(getProductDetails(id))
+        cart.cartItems.map((item) => {
+            if (item.product === id) {
+                console.log(typeof(item.quantity))
+                setQuantity(item.quantity)
+                setquantityInCart(item.quantity)
+            }
+        })
     }, [dispatch, id, error, alert])
 
     const options = {
@@ -37,14 +52,26 @@ const ProductDetailsContainer = () => {
         isHalf: true
     }
 
-    // console.log(product.reviews)
-    console.log(product.reviews)
-    console.log(product)
+    const increaseItems = () => {
+        if (product.stock <= quantity) return
+        let qty = quantity + 1
+        setQuantity(qty)
+    }
+
+    const decreaseItems = () => {
+        if (quantity <= 1) return
+        let qty = quantity - 1
+        setQuantity(qty)
+    }
+
+    const addToCartSubmit = () => {
+        dispatch(addToCart(quantity, product))
+    }
 
     return (
         <>
             <Navbar showFilter={false} />
-            
+
             {loading ? <Loader /> : <div>
                 <div className='productDetails'>
                     <div className="left-details">
@@ -67,11 +94,12 @@ const ProductDetailsContainer = () => {
                             <h1>{`${product.price} Rs`}</h1>
                             <div className="detailsblock-3-1">
                                 <div className="detailsblock-3-1-1">
-                                    <button className='btn btn-primary m-2'>-</button>
-                                    <input type="number" className='form-control m-2' value="1" />
-                                    <button className='btn btn-primary m-2'>+</button>
+                                    <button className='btn btn-primary m-2' onClick={decreaseItems}>-</button>
+                                    <input type="number" className='form-control m-2' readOnly value={quantity} />
+                                    <button className='btn btn-primary m-2' onClick={increaseItems}>+</button>
                                 </div>
-                                <button className='btn btn-primary'>Add to Cart</button>
+                                    {quantityInCart !== 0 && <p>You already have {quantityInCart} {product.name} in your cart</p>}
+                                <button className='btn btn-primary' onClick={addToCartSubmit}>Add to Cart</button>
                             </div>
                             <p>
                                 Status:

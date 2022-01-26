@@ -13,12 +13,15 @@ const {
     ALL_PRODUCT_DETAIL_REQUEST,
     ALL_PRODUCT_DETAIL_SUCCESS,
     ALL_PRODUCT_DETAIL_FAIL,
+    ADD_TO_CART_SUCCESS,
+    ADD_TO_CART_FAIL,
     PRICE,
     PRICE_ERROR,
     CATEGORY,
     CATEGORY_ERROR,
     CLEAR_ERRORS,
     RATINGS,
+    REMOVE_ITEM,
     RATINGS_ERROR
 } = require("../constants/productConstants")
 
@@ -28,7 +31,7 @@ export const getProduct = (keyword = "", page, productPerPage, price, category, 
         dispatch({
             type: ALL_PRODUCT_REQUEST
         })
-        console.log(category, typeof(category))
+        console.log(category, typeof (category))
 
         let link = ""
         if (category === undefined || category === "") {
@@ -38,7 +41,7 @@ export const getProduct = (keyword = "", page, productPerPage, price, category, 
             link = `/api/v1/products?productsPerPage=${productPerPage}&keyword=${keyword}&page=${page}&price[gte]=${price[0]}&price[lte]=${price[1]}&ratings[gte]=${ratings}&category=${category}`
         }
         const { data } = await axios.get(link)
-        
+
         // const { data } = await fetch("/api/v1/products?productsPerPage=10")
 
         dispatch({
@@ -103,7 +106,7 @@ export const getBestSellers = (collectionName, page, productPerPage, price, cate
             type: ALL_PRODUCT_REQUEST
         })
         console.log(collectionName, page, productPerPage, price, category)
-        
+
         // const link = `api/v1/searchByCollection?collectionName="best seller"&category=${category}&price[lte]=${price[1]}&price[gte]=${price[0]}&page=${page}&productsPerPage=${productPerPage}`
         let link = ""
         if (category === undefined || category === "") {
@@ -170,6 +173,85 @@ export const getRatingFilter = (newRating) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: RATINGS_ERROR,
+            payload: error
+        })
+    }
+}
+
+export const addToCart = (quantity, product) => async (dispatch, getState) => {
+    try {
+
+        dispatch({
+            type: ADD_TO_CART_SUCCESS,
+            payload: {
+                product: product._id,
+                name: product.name,
+                price: product.price,
+                image: product.images[0].url,
+                quantity: quantity
+            }
+        });
+
+        localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems))
+        // localStorage.removeItem("cartItems")
+
+    } catch (error) {
+        dispatch({
+            type: ADD_TO_CART_FAIL,
+            payload: error
+        })
+    }
+}
+
+// Remove Item from cart
+export const removeItem = (id) => async (dispatch) => {
+    try {
+        let cartItems = JSON.parse(localStorage.getItem("cartItems"))
+
+
+        // Delete the below mentioned item
+        cartItems.map((i, index) => {
+            if (i.product === id) {
+                cartItems.splice(index, 1)
+            }
+        })
+
+        localStorage.setItem("cartItems", JSON.stringify(cartItems))
+        // setforceUpdate((i) => !i)
+
+        dispatch({
+            type: REMOVE_ITEM,
+            payload: cartItems
+        })
+
+    } catch (error) {
+        dispatch({
+            type: "REMOVE_ITEM_ERROR",
+            payload: error
+        })
+    }
+}
+
+export const editQuantity = (qty, id) => async (dispatch) => {
+    try {
+        let cartItems = JSON.parse(localStorage.getItem("cartItems"))
+        cartItems.map((i)=>{
+            if(i.product === id) {
+                i.quantity = qty
+            }
+        })
+
+        localStorage.setItem("cartItems", JSON.stringify(cartItems))
+        // setforceUpdate((i) => !i)
+
+        dispatch({
+            type: "EDIT_ITEM",
+            payload: cartItems
+        })
+
+    } catch (error) {
+        dispatch({
+            type: "EDIT_ITEM_ERROR",
             payload: error
         })
     }

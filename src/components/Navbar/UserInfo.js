@@ -47,6 +47,7 @@ const UserInfo = ({ user }) => {
                     {user.user.user.role === "admin" && <li><Link className="dropdown-item" to="/dashboard">Dashboard</Link></li>}
                     <li><Link className="dropdown-item" to="/profile">Profile</Link></li>
                     <li><Link className="dropdown-item" to="/orders">Orders</Link></li>
+                    <li><Link className="dropdown-item" to="/cart">Your Cart</Link></li>
                     <li><hr className="dropdown-divider" /></li>
                     <li onClick={() => logout()} className='btn btn-danger mx-3'>Logout</li>
                 </ul>

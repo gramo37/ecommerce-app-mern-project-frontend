@@ -242,6 +242,8 @@ export const resetPassword = (token, newPassword, confirmPassword) => async (dis
             confirmPassword: confirmPassword
         })
 
+        setCookie("token", data.token, 1)
+
         dispatch({
             type: RESET_PASSWORD_SUCCESS,
             payload: data

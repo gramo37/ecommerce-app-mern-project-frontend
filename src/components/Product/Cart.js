@@ -1,0 +1,64 @@
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import Navbar from '../Navbar/Navbar';
+import CartItem from './CartItem';
+import "./cart.css";
+import { removeItem } from '../../actions/productAction';
+
+const Cart = () => {
+
+    const cart = useSelector(
+        (state) => state.cart
+    )
+    const dispatch = useDispatch()
+    
+    const [totalPrice, settotalPrice] = useState(0);
+    const removeItemPressed = (id) => {
+        dispatch(removeItem(id))
+    }
+    
+    useEffect(() => {
+        let temp = 0;
+        cart.cartItems.map((i) => {
+            temp += (i.price * i.quantity)
+        })
+        settotalPrice(temp)
+    }, [cart])
+    return (
+        <>
+            <Navbar />
+            <h2 className='text-center m-2'>Your Cart</h2>
+
+            <table class="container table table-light table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Sr No</th>
+                        <th scope="col">Image</th>
+                        <th scope="col">Product Name</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Sub-Total</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {console.log(cart.cartItems)}
+                    {cart.cartItems.map((i, index) =>
+                        <CartItem removeItem={removeItemPressed} item={i} index={index + 1} />
+                    )}
+                    <tr>
+                        <th scope="row">Total Price</th>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>{totalPrice}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </>
+    )
+};
+
+export default Cart;

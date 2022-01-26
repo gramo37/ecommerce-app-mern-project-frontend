@@ -1,22 +1,36 @@
-import React, { useState } from 'react';
-import { useParams } from "react-router-dom"
+import React, { useEffect, useState } from 'react';
+import { useNavigate, useParams } from "react-router-dom"
 import Navbar from '../Navbar/Navbar';
 import { useSelector, useDispatch } from 'react-redux'; 
 import {resetPassword} from "../../actions/userAction";
+import {useAlert} from "react-alert";
+import {loadUser} from "../../actions/userAction"
 
 const ResetPassword = () => {
 
+    const alert = useAlert()
+    const navigate = useNavigate()
     const[newPassword, setNewPassword] = useState("")
     const[confirmPassword, setConfirmPassword] = useState("")
     const dispatch = useDispatch();
 
     const resetPasswordReducer = useSelector((state)=>state.resetPassword)
-    console.log(resetPasswordReducer)
     let { token } = useParams();
+
+    useEffect(async ()=>{
+        if(!resetPasswordReducer.loading && resetPasswordReducer.error) {
+            alert.error(resetPasswordReducer.error.message)
+        }
+
+        else if(!resetPasswordReducer.loading && resetPasswordReducer.message.success) {
+            alert.success("Password Successfully changed")
+            await dispatch(loadUser())
+            navigate("/profile")
+        }
+    }, [resetPasswordReducer])
 
     const resetPasswordSubmit = (e) => {
         e.preventDefault()
-        console.log(token, newPassword, confirmPassword)
         dispatch(resetPassword(token, newPassword, confirmPassword))
     }
 

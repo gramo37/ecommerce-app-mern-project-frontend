@@ -23,6 +23,7 @@ import EditProfile from "./components/Profile/EditProfile"
 import UpdatePassword from './components/Profile/UpdatePassword';
 import ForgotPassword from './components/Login/ForgotPassword';
 import ResetPassword from './components/Login/ResetPassword';
+import Cart from './components/Product/Cart';
 
 function App() {
 
@@ -44,6 +45,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/profile" element={<Profile />} />
+        <Route exact path="cart" element={<Cart />}/>
         <Route path="api/v2/password/reset/:token" element={<ResetPassword />} />
         <Route exact path="/forgotPassword" element={<ForgotPassword />} />
         <Route exact path="editProfile" element={<EditProfile />} />
