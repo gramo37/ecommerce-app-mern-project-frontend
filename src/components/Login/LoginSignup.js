@@ -4,12 +4,13 @@ import LockIcon from '@mui/icons-material/Lock';
 import FaceIcon from '@mui/icons-material/Lock';
 import { Link } from "react-router-dom"
 import { useSelector, useDispatch } from 'react-redux';
-import { loginUser, signinUser, clearUserError } from "../../actions/userAction"
+import { loginUser, signinUser } from "../../actions/userAction"
 import './loginSignup.css'
 import { useNavigate } from 'react-router';
 import { useAlert } from "react-alert";
 import Loader from '../Loader/Loader';
 import Navbar from '../Navbar/Navbar';
+import { useLocation } from 'react-router-dom';
 
 const LoginSignup = () => {
 
@@ -23,6 +24,9 @@ const LoginSignup = () => {
             password: "",
         }
     )
+
+    const search = useLocation().search;
+    let redirect = new URLSearchParams(search).get('redirect');
 
     const [avatar, setavatar] = useState()
     const [avatarPreview, setavatarPreview] = useState("/logo192.png")
@@ -45,7 +49,14 @@ const LoginSignup = () => {
             // dispatch(clearUserError())
             return alert.error(userDetails.error.message);
         }
-        if (userDetails.isAuthenticated) {
+        if (!userDetails.isAuthenticated && redirect === "checkout") {
+            navigate("/login")
+        }
+        else if (userDetails.isAuthenticated && redirect === "checkout") {
+            console.log(redirect)
+            navigate('/checkout')
+        }
+        else if (userDetails.isAuthenticated && redirect === null) {
             navigate('/profile')
         }
     }, [dispatch, userDetails.isAuthenticated, userDetails.error, alert])

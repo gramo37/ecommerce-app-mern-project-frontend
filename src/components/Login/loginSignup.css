@@ -80,7 +80,8 @@
 }
 
 .loginForm > div > input,
-.signupForm > div > input {
+.signupForm > div > input,
+.signupName > select {
     padding: 1vmax 4vmax;
     padding-right: 1vmax;
     width: 100%;

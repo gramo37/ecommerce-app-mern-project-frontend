@@ -6,7 +6,9 @@ import Contact from './components/Contact/Contact'
 import Home from './components/Home/Home'
 import WebFont from 'webfontloader';
 import store from './store'
-import { useSelector } from "react-redux"
+import { useSelector } from "react-redux";
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 import {
   BrowserRouter as Router,
   Routes,
@@ -24,10 +26,22 @@ import UpdatePassword from './components/Profile/UpdatePassword';
 import ForgotPassword from './components/Login/ForgotPassword';
 import ResetPassword from './components/Login/ResetPassword';
 import Cart from './components/Product/Cart';
+import Checkout from './components/Product/Checkout';
+import ConfirmOrder from './components/Product/ConfirmOrder';
+import Payment from './components/Product/Payment';
+import axios from 'axios';
 
 function App() {
 
   const { user, isAuthenticated } = useSelector(state => state.user)
+
+  const [stripeApiKey, setStripeApiKey] = React.useState("");
+
+  async function getStripeApiKey() {
+    const { data } = await axios.get("/api/v4/sendApiKey");
+
+    setStripeApiKey(data.stripeApiKey)
+  }
 
   React.useEffect(() => {
     WebFont.load({
@@ -35,8 +49,10 @@ function App() {
         families: ["Roboto", "Droid Sans", "Chilanka"]
       }
     })
-    // Get the user after refresh - very imp code
+    // Get the user after refresh - very imp line
     store.dispatch(loadUser())
+
+    getStripeApiKey();
   }, []);
 
   return (
@@ -45,7 +61,14 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Home />} />
         <Route exact path="/profile" element={<Profile />} />
-        <Route exact path="cart" element={<Cart />}/>
+        <Route exact path="/checkout" element={<Checkout />} />
+        <Route exact path="/confirmOrder" element={<ConfirmOrder />} />
+        {stripeApiKey && <Route exact path="/payment" element={
+        <Elements stripe={loadStripe(stripeApiKey)}>
+          <Payment />
+        </Elements>
+        } />}
+        <Route exact path="cart" element={<Cart />} />
         <Route path="api/v2/password/reset/:token" element={<ResetPassword />} />
         <Route exact path="/forgotPassword" element={<ForgotPassword />} />
         <Route exact path="editProfile" element={<EditProfile />} />

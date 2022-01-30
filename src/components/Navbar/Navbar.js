@@ -10,6 +10,7 @@ import InfoIcon from '@mui/icons-material/Info';
 import PermContactCalendarIcon from '@mui/icons-material/PermContactCalendar';
 import Search from "../Search/Search"
 import Filters from "../Filters/Filters"
+// import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const Navbar = (props) => {
 
@@ -55,6 +56,7 @@ const Navbar = (props) => {
                         {!userDetails.isAuthenticated && <div className="nav-item">
                             <HeaderOption title="Login" linkTo="/login" avatar={true} />
                         </div>}
+                        <HeaderOption title="Cart" Icon={ShoppingCartIcon} linkTo="/cart" />
                         
                         {props.showFilter && <Filters />}
                     </div>

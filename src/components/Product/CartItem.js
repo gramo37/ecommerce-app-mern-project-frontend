@@ -14,8 +14,8 @@ const CartItem = (props) => {
 
     const { name, quantity, price, image, product } = props.item;
 
-    useEffect(()=>{
-        dispatch(getProductDetails(product))
+    useEffect(async ()=>{
+        await dispatch(getProductDetails(product))
     }, [])
 
     const [cartquantity, setCartquantity] = useState(quantity);
@@ -42,9 +42,9 @@ const CartItem = (props) => {
                 <td>{name}</td>
                 <td>
                     <div className="detailsblock-3-1-1">
-                        <button className='btn btn-primary m-2' onClick={decreaseQuantity}>-</button>
+                        <button className='btn btn-primary m-2' disabled={cartquantity <= 1 ? true : false} onClick={decreaseQuantity}>-</button>
                         <input type="number" style={{ width: "50px" }} className='form-control cartQuantity' readOnly value={cartquantity} />
-                        <button className='btn btn-primary m-2' onClick={increaseQuantity}>+</button>
+                        <button className='btn btn-primary m-2' disabled={cartquantity >= productDetails.product.stock ? true : false} onClick={increaseQuantity}>+</button>
                     </div>
                 </td>
                 <td>{price}</td>

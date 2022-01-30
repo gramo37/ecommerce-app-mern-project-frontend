@@ -30,18 +30,27 @@ const ProductDetailsContainer = () => {
     )
 
     useEffect(() => {
+        dispatch(getProductDetails(id))
+        cart.cartItems.map((item) => {
+            if (item.product === id) {
+                setQuantity(item.quantity)
+                setquantityInCart(item.quantity)
+            }
+        })
+    }, [])
+
+    useEffect(() => {
         if (error) {
             return alert.error(error);
         }
         dispatch(getProductDetails(id))
         cart.cartItems.map((item) => {
             if (item.product === id) {
-                console.log(typeof(item.quantity))
                 setQuantity(item.quantity)
                 setquantityInCart(item.quantity)
             }
         })
-    }, [dispatch, id, error, alert])
+    }, [dispatch, id, error, alert, cart])
 
     const options = {
         edit: false,
@@ -66,6 +75,7 @@ const ProductDetailsContainer = () => {
 
     const addToCartSubmit = () => {
         dispatch(addToCart(quantity, product))
+        alert.success("Items added to the cart successfully")
     }
 
     return (
@@ -94,11 +104,11 @@ const ProductDetailsContainer = () => {
                             <h1>{`${product.price} Rs`}</h1>
                             <div className="detailsblock-3-1">
                                 <div className="detailsblock-3-1-1">
-                                    <button className='btn btn-primary m-2' onClick={decreaseItems}>-</button>
+                                    <button className='btn btn-primary m-2' disabled={quantity <= 1 ? true : false} onClick={decreaseItems}>-</button>
                                     <input type="number" className='form-control m-2' readOnly value={quantity} />
-                                    <button className='btn btn-primary m-2' onClick={increaseItems}>+</button>
+                                    <button className='btn btn-primary m-2' disabled={product.stock <= quantity ? true : false} onClick={increaseItems}>+</button>
                                 </div>
-                                    {quantityInCart !== 0 && <p>You already have {quantityInCart} {product.name} in your cart</p>}
+                                {quantityInCart !== 0 && <p>You already have {quantityInCart} {product.name} in your cart</p>}
                                 <button className='btn btn-primary' onClick={addToCartSubmit}>Add to Cart</button>
                             </div>
                             <p>
@@ -128,4 +138,4 @@ const ProductDetailsContainer = () => {
     )
 }
 
-export default ProductDetailsContainer
+export default ProductDetailsContainer;

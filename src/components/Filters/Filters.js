@@ -82,7 +82,6 @@ const Filters = () => {
                                 <Typography>Price</Typography>
                                 <Slider
                                     value={price}
-                                    // onMouseUp={priceHandler}
                                     onChange={priceHandler}
                                     valueLabelDisplay='auto'
                                     aria-labelledby="range-slider"

@@ -38,7 +38,6 @@ const ProductContainer = () => {
         (state) => state.user
     )
 
-    console.log(document.cookie)
     // UseEffect
     useEffect(() => {
         if (error) {

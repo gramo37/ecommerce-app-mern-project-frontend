@@ -22,6 +22,7 @@ const {
     CLEAR_ERRORS,
     RATINGS,
     REMOVE_ITEM,
+    EDIT_ITEM,
     RATINGS_ERROR
 } = require("../constants/productConstants")
 
@@ -179,6 +180,7 @@ export const getRatingFilter = (newRating) => async (dispatch) => {
 }
 
 export const addToCart = (quantity, product) => async (dispatch, getState) => {
+
     try {
 
         dispatch({
@@ -193,7 +195,11 @@ export const addToCart = (quantity, product) => async (dispatch, getState) => {
         });
 
         localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems))
-        // localStorage.removeItem("cartItems")
+
+        dispatch({
+            type: EDIT_ITEM,
+            payload: getState().cart.cartItems
+        })
 
     } catch (error) {
         dispatch({
@@ -235,17 +241,16 @@ export const removeItem = (id) => async (dispatch) => {
 export const editQuantity = (qty, id) => async (dispatch) => {
     try {
         let cartItems = JSON.parse(localStorage.getItem("cartItems"))
-        cartItems.map((i)=>{
-            if(i.product === id) {
+        cartItems.map((i) => {
+            if (i.product === id) {
                 i.quantity = qty
             }
         })
 
         localStorage.setItem("cartItems", JSON.stringify(cartItems))
-        // setforceUpdate((i) => !i)
 
         dispatch({
-            type: "EDIT_ITEM",
+            type: EDIT_ITEM,
             payload: cartItems
         })
 
@@ -255,6 +260,15 @@ export const editQuantity = (qty, id) => async (dispatch) => {
             payload: error
         })
     }
+}
+
+export const saveShippingInfo = (data) => async (dispatch) => {
+    dispatch({
+        type: "SAVE_SHIPPING_INFO",
+        payload: data,
+    })
+
+    localStorage.setItem("shippingInfo", JSON.stringify(data))
 }
 
 export const clearProductError = () => async (dispatch) => {

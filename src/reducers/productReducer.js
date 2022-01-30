@@ -16,6 +16,7 @@ const {
     ADD_TO_CART_SUCCESS,
     ADD_TO_CART_FAIL,
     REMOVE_ITEM,
+    EDIT_ITEM,
     CLEAR_ERRORS
 } = require("../constants/productConstants")
 
@@ -153,6 +154,16 @@ export const ratingsFilterReducer = (state = { ratings: 0 }, action) => {
 
 export const addToCartReducer = (state = { cartItems: [] }, action) => {
     switch (action.type) {
+        case "SAVE_SHIPPING_INFO":
+            return {
+                ...state,
+                shippinInfo: action.payload
+            }
+        case EDIT_ITEM:
+            return {
+                ...state,
+                cartItems: action.payload
+            }
         case REMOVE_ITEM:
             return {
                 ...state,
@@ -170,14 +181,6 @@ export const addToCartReducer = (state = { cartItems: [] }, action) => {
 
             // Old item is added
             if (isItemExist) {
-                // state.cartItems.map((i) => {
-                //     if (i.product === item.product) {
-                //         i.quantity += item.quantity
-                //     }
-                // })
-                // return {
-                //     ...state
-                // }
                 return {
                     ...state,
                     cartItems: state.cartItems.map((i) =>
@@ -185,6 +188,7 @@ export const addToCartReducer = (state = { cartItems: [] }, action) => {
                     ),
                 };
             }
+
             // New Item is added to the cart
             else {
                 return {
